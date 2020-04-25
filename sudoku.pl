@@ -32,6 +32,7 @@ numbers([1, 2, 3, 4, 5, 6, 7, 8, 9]).
 play():-
 	start([Start]),
 	sudoku(Start, AllChildren, 0),
+	%lsa
 	searchChildrenBFS(AllChildren, Goal).
 
 %sudoku needs a base case
@@ -44,7 +45,9 @@ sudoku(Start, AllChildren, Counter):-
 				%l x le htrg3le maslan hgeb l index bta3ha
 	getIndex(Start, RowNum, Index, Value),	%get RowNum & Index
 	numbers(Num),
+	%lsa
 	getPossibleValues(RowNum, Index, Num, Possible),
+	%lsa
 	addChildren(RowNum, Index, Possible, NewChildren),	%addChildren subtitute values in the same position
 														%hyrg3le list bkol l start l gdeda
 	S is [Start],
