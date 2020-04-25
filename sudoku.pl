@@ -31,29 +31,28 @@ numbers([1, 2, 3, 4, 5, 6, 7, 8, 9]).
 
 play():-
 	start(Start),
-	blocks(OriginalB),
-	sudoku(Start, OriginalB, Blocks, [], AllChildren, 0),
+	sudoku(Start, AllChildren, 0),
 	searchChildrenBFS(AllChildren, Goal).
 
-sudoku([], _, _, _, _, _).
+%sudoku needs a base case
 
-sudoku(Start, OriginalB, Blocks, CurrentChildren, AllChildren, Counter):-
+sudoku(Start, AllChildren, Counter):-
+	blocks(OriginalB),
 	getBlocks(Start, Start, OriginalB, Blocks), 
-	%hngeb awl position fade w hnrg3 hwa f anhe row wl index bta3o fl row,
-	%lsa htt3ml kolha
-	getNextX(),
-	%l x le htrg3le maslan hgeb l index bta3ha
-	getIndex(Start, RowNum, Index, Value),
+	getNextX(),	%lsa mt3mlt4
+				%hngeb awl position fade w hnrg3 hwa f anhe row wl index bta3o fl row,
+				%l x le htrg3le maslan hgeb l index bta3ha
+	getIndex(Start, RowNum, Index, Value),	%get RowNum & Index
 	numbers(Num),
 	getPossibleValues(RowNum, Index, Num, Possible),
-	%addChildren subtitute values in the same position, hyrg3ke list bkol l start l gdeda
-	addChildren(RowNum, Index, Possible, NewChildren),
-	append(Start, NewChildren, All),
+	addChildren(RowNum, Index, Possible, NewChildren),	%addChildren subtitute values in the same position
+														%hyrg3le list bkol l start l gdeda
+	S is [Start],
+	append(S, NewChildren, All),
 	AllChildren is All,
 	N is Counter + 1,
 	nth0(N, AllChildren, NewStart),
-	blocks(B),
-	sudoku(NewStart, Blocks, .
+	sudoku(NewStart, AllChildren, N).
 
 
 getPossibleValues
