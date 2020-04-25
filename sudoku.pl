@@ -2,23 +2,21 @@
 %	   [X, 5, X, X, X, 3, X, 4, X], [1, X, 7, 9, X, 5], [],
 %	   [], [], []]).
 
-	   
-
 % :- dynamic blocks/1.
 
 % blocks(
 
 %momkn n4el X w n7ot 0
 start([[
-		[X, 2, 6, X, X, X, 8, 1, X],
-		[3, X, X, 7, X, 8, X, X, 6],
-		[4, X, X, X, 5, X, X, X, 7],
-		[X, 5, X, 1, X, 7, X, 9, X],
-		[X, X, 3, 9, X, 5, 1, X, X],
-		[X, 4, X, 3, X, 2, X, 5, X],
-		[1, X, X, X, 3, X, X, X, 2],
-		[5, X, X, 2, X, 4, X, X, 9],
-		[X, 3, 8, X, X, X, 4, 6, X]
+		[0, 2, 6, 0, 0, 0, 8, 1, 0],
+		[3, 0, 0, 7, 0, 8, 0, 0, 6],
+		[4, 0, 0, 0, 5, 0, 0, 0, 7],
+		[0, 5, 0, 1, 0, 7, 0, 9, 0],
+		[0, 0, 3, 9, 0, 5, 1, 0, 0],
+		[0, 4, 0, 3, 0, 2, 0, 5, 0],
+		[1, 0, 0, 0, 3, 0, 0, 0, 2],
+		[5, 0, 0, 2, 0, 4, 0, 0, 9],
+		[0, 3, 8, 0, 0, 0, 4, 6, 0]
 	]]).
 
 blocks([
@@ -27,22 +25,34 @@ blocks([
 		[], [], []
 	]).
 
-numbers([1, 2, 3, 4, 5, 6, 7, 8, 9]).
+%numbers([1, 2, 3, 4, 5, 6, 7, 8, 9]).
+
+numbers(1).
+numbers(2).
+numbers(3).
+numbers(4).
+numbers(5).
+numbers(6).
+numbers(7).
+numbers(8).
+numbers(9).
+
 
 play():-
 	start([Start]),
 	sudoku(Start, AllChildren, 0),
 	%lsa
 	searchChildrenBFS(AllChildren, Goal).
-
+ 
 %sudoku needs a base case
 
 sudoku(Start, AllChildren, Counter):-
 	blocks(OriginalB),
-	getBlocks(Start, Start, OriginalB, Blocks), 
-	getNextX(),	%lsa mt3mlt4
+	getBlocks(Start, Start, OriginalB, Blocks), %blocks hyrg3le feha list mt2sma 9 blocks 
+	%getNextX(),	%lsa mt3mlt4
 				%hngeb awl position fade w hnrg3 hwa f anhe row wl index bta3o fl row,
 				%l x le htrg3le maslan hgeb l index bta3ha
+	Value is 0,
 	getIndex(Start, RowNum, Index, Value),	%get RowNum & Index
 	numbers(Num),
 	%lsa
