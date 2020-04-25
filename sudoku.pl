@@ -30,7 +30,7 @@ blocks([
 numbers([1, 2, 3, 4, 5, 6, 7, 8, 9]).
 
 play():-
-	start(Start),
+	start([Start]),
 	sudoku(Start, AllChildren, 0),
 	searchChildrenBFS(AllChildren, Goal).
 
@@ -55,11 +55,14 @@ sudoku(Start, AllChildren, Counter):-
 	sudoku(NewStart, AllChildren, N).
 
 
-getPossibleValues
+getPossibleValues(_, _, [], _):- !.
+getPossibleValues(RowNum, Index, [H|T], Possible):-
+	not(member(H, RowNum)),
+	
+
 
 
 getBlocks(_, [], _, _).
-
 getBlocks(Start, [Row|Rest], OriginalB, Blocks):-
 	nth0(RowNum, Start, Row),
 	addInBlock(RowNum, Row, OriginalB, Block),
