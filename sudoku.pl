@@ -20,79 +20,78 @@ start([
 		[5, X, X, 2, X, 4, X, X, 9],
 		[X, 3, 8, X, X, X, 4, 6, X]
 	]).
-	  
+
+blocks([
+		[], [], [],
+		[], [], [],
+		[], [], []
+	]).
+
 numbers([1, 2, 3, 4, 5, 6, 7, 8, 9]).
 
 play():-
-	start(S),
-	sudoku(S, [[], [], [],
-			   [], [], [],
-			   [], [], []]).
+	start(Start),
+	blocks(OriginalB),
+	sudoku(Start, OriginalB, Blocks).
 	
-sudoku(Start, Blocks):-
-	getBlocks(Start, Start, Blocks).
+sudoku(Start, OriginalB, Blocks):-
+	getBlocks(Start, Start, OriginalB, Blocks).
 
+getBlocks(_, [], _, _).
 
-getBlocks(Start, [[A, B, C, D, E, F, G, H, I]|T], Blokcs):-
-	nth0(RowNum, Start, [A, B, C, D, E, F, G, H, I]),
-	addInBlock(RowNum, [A, B, C, D, E, F, G, H, I], Blocks).
+getBlocks(Start, [Row|Rest], OriginalB, Blocks):-
+	nth0(RowNum, Start, Row),
+	addInBlock(RowNum, Row, OriginalB, Block),
+	Blocks is Block,
+	getBlocks(Start, Rest, Block, Block).
 	
-	
-addInBlock(RowNum, [A, B, C, D, E, F, G, H, I], Blocks):-
+addInBlock(RowNum, [A, B, C, D, E, F, G, H, I], OriginalB, Block):-
 	(RowNum = 0; RowNum = 1; RowNum = 2),
-	nth0(0, Blocks, B1),
-	nth0(1, Blocks, B2),
-	nth0(2, Blocks, B3),
+	nth0(0, OriginalB, B1),
+	nth0(1, OriginalB, B2),
+	nth0(2, OriginalB, B3),
 	
-	nth0(0, Blokcs, [A|B1]),
-	nth0(0, Blocks, [B|B1]),
-	nth0(0, Blocks, [C|B1]),
+	append([A, B, C], B1, NewB1),
+	append([D, E, F], B2, NewB2),
+	append([G, H, I], B3, NewB3),
 	
-	nth0(1, Blocks, [D|B2]),
-	nth0(1, Blocks, [E|B2]),
-	nth0(1, Blocks, [F|B2]),
+	substitute(B1, OriginalB, NewB1, OriginalB2), 
+	substitute(B2, OriginalB2, NewB2, OriginalB3), 
+	substitute(B3, OriginalB3, NewB3, OriginalBNew), 
 	
-	nth0(2, Blocks, [G|B3]),
-	nth0(2, Blocks, [H|B3]),
-	nth0(2, Blocks, [I|B3]).
+	Block is OriginalBNew.
 	
-addInBlock(RowNum, [A, B, C, D, E, F, G, H, I], Blocks):-
+addInBlock(RowNum, [A, B, C, D, E, F, G, H, I], OriginalB, Block):-
 	(RowNum = 3; RowNum = 4; RowNum = 5),
-	nth0(3, Blocks, B1),
-	nth0(4, Blocks, B2),
-	nth0(5, Blocks, B3),
+	nth0(3, OriginalB, B1),
+	nth0(4, OriginalB, B2),
+	nth0(5, OriginalB, B3),
 	
-	nth0(3, Blokcs, [A|B1]),
-	nth0(3, Blocks, [B|B1]),
-	nth0(3, Blocks, [C|B1]),
+	append([A, B, C], B1, NewB1),
+	append([D, E, F], B2, NewB2),
+	append([G, H, I], B3, NewB3),
 	
-	nth0(4, Blocks, [D|B2]),
-	nth0(4, Blocks, [E|B2]),
-	nth0(4, Blocks, [F|B2]),
+	substitute(B1, OriginalB, NewB1, OriginalB2), 
+	substitute(B2, OriginalB2, NewB2, OriginalB3), 
+	substitute(B3, OriginalB3, NewB3, OriginalBNew), 
 	
-	nth0(5, Blocks, [G|B3]),
-	nth0(5, Blocks, [H|B3]),
-	nth0(5, Blocks, [I|B3]).
+	Block is OriginalBNew.
 	
-addInBlock(RowNum, [A, B, C, D, E, F, G, H, I], Blocks):-
+addInBlock(RowNum, [A, B, C, D, E, F, G, H, I], OriginalB, Block):-
 	(RowNum = 6; RowNum = 7; RowNum = 8),
-	nth0(6, Blocks, B1),
-	nth0(7, Blocks, B2),
-	nth0(8, Blocks, B3),
+	nth0(6, OriginalB, B1),
+	nth0(7, OriginalB, B2),
+	nth0(8, OriginalB, B3),
 	
-	nth0(6, Blokcs, [A|B1]),
-	nth0(6, Blocks, [B|B1]),
-	nth0(6, Blocks, [C|B1]),
+	append([A, B, C], B1, NewB1),
+	append([D, E, F], B2, NewB2),
+	append([G, H, I], B3, NewB3),
 	
-	nth0(7, Blocks, [D|B2]),
-	nth0(7, Blocks, [E|B2]),
-	nth0(7, Blocks, [F|B2]),
+	substitute(B1, OriginalB, NewB1, OriginalB2), 
+	substitute(B2, OriginalB2, NewB2, OriginalB3), 
+	substitute(B3, OriginalB3, NewB3, OriginalBNew), 
 	
-	nth0(8, Blocks, [G|B3]),
-	nth0(8, Blocks, [H|B3]),
-	nth0(8, Blocks, [I|B3]).
-	
-	
+	Block is OriginalBNew.
 
 getIndex(Start, Row, Index, Value):-
 	nth0(Row, Start, RowMatrix),
