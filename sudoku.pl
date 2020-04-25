@@ -8,8 +8,8 @@
 
 % blocks(
 
-
-start([
+%momkn n4el X w n7ot 0
+start([[
 		[X, 2, 6, X, X, X, 8, 1, X],
 		[3, X, X, 7, X, 8, X, X, 6],
 		[4, X, X, X, 5, X, X, X, 7],
@@ -19,7 +19,7 @@ start([
 		[1, X, X, X, 3, X, X, X, 2],
 		[5, X, X, 2, X, 4, X, X, 9],
 		[X, 3, 8, X, X, X, 4, 6, X]
-	]).
+	]]).
 
 blocks([
 		[], [], [],
@@ -32,10 +32,32 @@ numbers([1, 2, 3, 4, 5, 6, 7, 8, 9]).
 play():-
 	start(Start),
 	blocks(OriginalB),
-	sudoku(Start, OriginalB, Blocks).
-	
-sudoku(Start, OriginalB, Blocks):-
-	getBlocks(Start, Start, OriginalB, Blocks).
+	sudoku(Start, OriginalB, Blocks, [], AllChildren, 0),
+	searchChildrenBFS(AllChildren, Goal).
+
+sudoku([], _, _, _, _, _).
+
+sudoku(Start, OriginalB, Blocks, CurrentChildren, AllChildren, Counter):-
+	getBlocks(Start, Start, OriginalB, Blocks), 
+	%hngeb awl position fade w hnrg3 hwa f anhe row wl index bta3o fl row,
+	%lsa htt3ml kolha
+	getNextX(),
+	%l x le htrg3le maslan hgeb l index bta3ha
+	getIndex(Start, RowNum, Index, Value),
+	numbers(Num),
+	getPossibleValues(RowNum, Index, Num, Possible),
+	%addChildren subtitute values in the same position, hyrg3ke list bkol l start l gdeda
+	addChildren(RowNum, Index, Possible, NewChildren),
+	append(Start, NewChildren, All),
+	AllChildren is All,
+	N is Counter + 1,
+	nth0(N, AllChildren, NewStart),
+	blocks(B),
+	sudoku(NewStart, Blocks, .
+
+
+getPossibleValues
+
 
 getBlocks(_, [], _, _).
 
