@@ -49,14 +49,11 @@ play():-
 sudoku(Start, AllChildren, Counter):-
 	blocks(OriginalB),
 	getBlocks(Start, Start, OriginalB, Blocks), %blocks hyrg3le feha list mt2sma 9 blocks 
-	%getNextX(),	%lsa mt3mlt4
-				%hngeb awl position fade w hnrg3 hwa f anhe row wl index bta3o fl row,
-				%l x le htrg3le maslan hgeb l index bta3ha
 	Value is 0,
-	getIndex(Start, RowNum, Index, Value),	%get RowNum & Index
-	numbers(Num),
+	getIndex(Start, RowNum, Index, Value),	%get RowNum & Index of l x le 3leh l dor
+	%numbers(Num),
 	%lsa
-	getPossibleValues(RowNum, Index, Num, Possible),
+	getPossibleValues(Start, RowNum, Index, Possible),
 	%lsa
 	addChildren(RowNum, Index, Possible, NewChildren),	%addChildren subtitute values in the same position
 														%hyrg3le list bkol l start l gdeda
@@ -68,9 +65,22 @@ sudoku(Start, AllChildren, Counter):-
 	sudoku(NewStart, AllChildren, N).
 
 
-getPossibleValues(_, _, [], _):- !.
-getPossibleValues(RowNum, Index, [H|T], Possible):-
-	not(member(H, RowNum)),
+%needs review
+getPossibleValues(Start, RowNum, Index, Possible):-
+	Possible is [],
+	numbers(Num),
+	nth0(RowNum, Start, Row),
+	not(member(Num, Row)),
+	%lsa
+	getColList(),
+	not(member(Num, Col)),
+	blocks(OriginalB),
+	getBlocks(Start, Start, OriginalB, Blocks),
+	%lsa
+	getSpecificBlock(),
+	not(member(Num, Block)),
+	append([Num], Possible, Possible).
+	
 	
 
 
