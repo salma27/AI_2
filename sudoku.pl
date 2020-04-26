@@ -51,8 +51,6 @@ sudoku(Start, AllChildren, Counter):-
 	getBlocks(Start, Start, OriginalB, Blocks), %blocks hyrg3le feha list mt2sma 9 blocks 
 	Value is 0,
 	getIndex(Start, RowNum, Index, Value),	%get RowNum & Index of l x le 3leh l dor
-	%numbers(Num),
-	%lsa
 	getPossibleValues(Start, RowNum, Index, Possible),
 	%lsa
 	addChildren(RowNum, Index, Possible, NewChildren),	%addChildren subtitute values in the same position
