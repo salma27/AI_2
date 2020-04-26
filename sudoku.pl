@@ -75,11 +75,15 @@ getPossibleValues(Start, RowNum, Index, Possible):-
 	not(member(Num, Col)),
 	blocks(OriginalB),
 	getBlocks(Start, Start, OriginalB, Blocks),
-	%lsa
-	getSpecificBlock(),
+	getSpecificBlock(Blocks, RowNum, Index, Block),
 	not(member(Num, Block)),
 	append([Num], Possible, Possible).
-	
+
+getSpecificBlock(Blocks, RowNum, Index, Block):-
+	N = (mod(Index, 3) + (3 * mod(RowNum, 3))),
+	nth0(N, Blocks, Tmp),
+	Block is Tmp.
+
 getColList(_, Tmp, Col, 9):- Col is Tmp, !.
 getColList(Start, Index, Tmp, Col, Counter):-
 	nth0(Counter, Start, Row),
