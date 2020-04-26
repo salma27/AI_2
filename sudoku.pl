@@ -1,11 +1,3 @@
-% start([[X, 2, 6, 3, X, X, 4, X, X], [X, X, X, 7, X, 8, X, 5, X], [8, 1, X, X, X, 6, X, X, 7],
-%	   [X, 5, X, X, X, 3, X, 4, X], [1, X, 7, 9, X, 5], [],
-%	   [], [], []]).
-
-% :- dynamic blocks/1.
-
-% blocks(
-
 %momkn n4el X w n7ot 0
 start([[
 		[0, 2, 6, 0, 0, 0, 8, 1, 0],
@@ -24,8 +16,6 @@ blocks([
 		[], [], [],
 		[], [], []
 	]).
-
-%numbers([1, 2, 3, 4, 5, 6, 7, 8, 9]).
 
 numbers(1).
 numbers(2).
