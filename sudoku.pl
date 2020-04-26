@@ -29,7 +29,8 @@ numbers(9).
 
 
 play():-
-	start([Start]),
+	start(S),
+	nth0(0, S, Start),
 	sudoku(Start, AllChildren, 0),
 	%lsa
 	searchChildrenBFS(AllChildren, Goal).
