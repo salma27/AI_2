@@ -71,8 +71,7 @@ getPossibleValues(Start, RowNum, Index, Possible):-
 	numbers(Num),
 	nth0(RowNum, Start, Row),
 	not(member(Num, Row)),
-	%lsa
-	getColList(),
+	getColList(Start, Index, [], Col, 0),
 	not(member(Num, Col)),
 	blocks(OriginalB),
 	getBlocks(Start, Start, OriginalB, Blocks),
@@ -81,9 +80,14 @@ getPossibleValues(Start, RowNum, Index, Possible):-
 	not(member(Num, Block)),
 	append([Num], Possible, Possible).
 	
+getColList(_, Tmp, Col, 9):- Col is Tmp, !.
+getColList(Start, Index, Tmp, Col, Counter):-
+	nth0(Counter, Start, Row),
+	nth0(Index, Row, Num),
+	append([Num], Tmp, Tmp2),
+	C is Counter + 1,
+	getColList(Start, Index, Tmp2, Col, C).
 	
-
-
 
 getBlocks(_, [], _, _).
 getBlocks(Start, [Row|Rest], OriginalB, Blocks):-
