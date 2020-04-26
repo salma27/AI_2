@@ -61,7 +61,7 @@ getPossibleValues(Start, RowNum, Index, Possible):-
 getColList([], _, Tmp, Tmp). %Col = Tmp, !.
 getColList([H|T], Index, Tmp, Col):-
 	nth0(Index, H, Value),
-	append([Value], Tmp, Tmp2),
+	append(Tmp, [Value], Tmp2),
 	getColList(T, Index, Tmp2, Col).
 
 getIndex(Start, Row, Index, Value):-
