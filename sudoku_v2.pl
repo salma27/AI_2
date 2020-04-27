@@ -34,13 +34,14 @@ allNumbers([1, 2, 3, 4, 5, 6, 7, 8, 9]).
 play():-
 	start(S),
 	nth0(0, S, Start),
-	sudoku(S, Start, AllChildren).
+	sudoku(S, Start, AllChildren, 0).
 	 
 sudoku(S, Start, AllChildren):- 
 	getIndex(Start, RowNum, Index, 0),
 	getPossibleValues(Start, RowNum, Index, Possible),
 	Child = [],
 	createChidren(Possible, Start, Child, Children, RowNum),
+	%append(AllChildren, Children, AllChildren),
 	write(Children).
 	
 	
