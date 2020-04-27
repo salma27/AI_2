@@ -25,7 +25,8 @@ play():-
 	start(S),
 	sudoku(S).	
 
-isGoal(Start):-not(nth0(x, Start, Num)).
+isGoal([Start|Rest]):-not(nth0(Num, Start, 0)), isGoal(Rest).
+isGoal([]).
 
 sudoku(Start):- 
 	isGoal(Start),
