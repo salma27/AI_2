@@ -31,12 +31,12 @@ numbers(9).
 allNumbers([1, 2, 3, 4, 5, 6, 7, 8, 9]). 
 
 
-play(X):-
+play():-
 	start(S),
 	nth0(0, S, Start),
-	sudoku(S, Start, AllChildren, X).
+	sudoku(S, Start, AllChildren).
 	 
-sudoku(S, Start, AllChildren, Possible):- 
+sudoku(S, Start, AllChildren):- 
 	getIndex(Start, RowNum, Index, 0),
 	getPossibleValues(Start, RowNum, Index, Possible).
 	
@@ -44,10 +44,10 @@ getPossibleValues(Start, RowNum, Index, Possible):-
 	nth0(RowNum, Start, Row),
 	allNumbers(All),
 	getColList(Start, Index, [], Col),
-	findall(Num, (member(Num, All),not(member(Num, Row)), not(member(Num, Col))), Possible),
 	blocks(OriginalB),
 	getBlocks(Start, Start, OriginalB, Blocks),
-	write(Blocks).
+	findall(Num, (member(Num, All),not(member(Num, Row)), not(member(Num, Col)),not(member(Num, Blocks))), Possible),
+	write(Possible).
 	
 getBlocks(_, [], Tmp, Blocks):- Blocks = Tmp, !.
 getBlocks(Start, [Row|Rest], OriginalB, Blocks):-
