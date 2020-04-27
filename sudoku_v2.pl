@@ -38,7 +38,21 @@ play():-
 	 
 sudoku(S, Start, AllChildren):- 
 	getIndex(Start, RowNum, Index, 0),
-	getPossibleValues(Start, RowNum, Index, Possible).
+	getPossibleValues(Start, RowNum, Index, Possible),
+	Child = [],
+	createChidren(Possible, Start, Child, Children, RowNum),
+	write(Children).
+	
+	
+createChidren([], _, Child, Children, _):- Children = Child, !.
+createChidren([H|T], Start, Child, Children, RowNum):-
+	Tmp = Start,
+	nth0(RowNum, Tmp, Row),
+	select(0, Row, H, NewRow),
+	select(Row, Tmp, NewRow, NewChild),
+	append(Child, [NewChild], ChildList),
+	createChidren(T, Start, ChildList, Children, RowNum).
+	
 	
 getPossibleValues(Start, RowNum, Index, Possible):-
 	nth0(RowNum, Start, Row),
@@ -46,8 +60,7 @@ getPossibleValues(Start, RowNum, Index, Possible):-
 	getColList(Start, Index, [], Col),
 	blocks(OriginalB),
 	getBlocks(Start, Start, OriginalB, Blocks),
-	findall(Num, (member(Num, All),not(member(Num, Row)), not(member(Num, Col)),not(member(Num, Blocks))), Possible),
-	write(Possible).
+	findall(Num, (member(Num, All),not(member(Num, Row)), not(member(Num, Col)),not(member(Num, Blocks))), Possible).
 	
 getBlocks(_, [], Tmp, Blocks):- Blocks = Tmp, !.
 getBlocks(Start, [Row|Rest], OriginalB, Blocks):-
@@ -102,16 +115,6 @@ addInBlock(RowNum, [A, B, C, D, E, F, G, H, I], OriginalB, Block):-
 	select(B3, OriginalB3, NewB3, OriginalBNew),
 	
 	Block = OriginalBNew.
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 getColList([], _, Tmp, Col):- Col = Tmp,!.
 getColList([H|T], Index, Tmp, Col):-
