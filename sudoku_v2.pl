@@ -28,37 +28,25 @@ numbers(6).
 numbers(7).
 numbers(8).
 numbers(9).
+allNumbers([1, 2, 3, 4, 5, 6, 7, 8, 9]). 
 
 
-play():-
+play(Col):-
 	start(S),
 	nth0(0, S, Start),
-	sudoku(S, Start, AllChildren, 0).
-	%lsa
-	
-	%searchChildrenBFS(AllChildren, Goal).
- 
- 
-allNumbers([1, 2, 3, 4, 5, 6, 7, 8, 9]). 
- 
-%sudoku needs a base case
-
-sudoku(S, Start, AllChildren, Counter):- 
+	sudoku(S, Start, AllChildren, 0, Col).
+	 
+sudoku(S, Start, AllChildren, Counter, Col):- 
 	getIndex(Start, RowNum, Index, 0),
-	%allNumbers(AllNum),
-	getPossibleValues(Start, RowNum, Index, Possible).
+	getPossibleValues(Start, RowNum, Index, Possible, Col).
 	
-getPossibleValues(Start, RowNum, Index, Possible):-
+getPossibleValues(Start, RowNum, Index, Possible, Col):-
 	nth0(RowNum, Start, Row),
 	allNumbers(All),
 	findall(Num, (member(Num, All),not(member(Num, Row))), Possible),
-	getColList(Start, Index, [], Col),
-	findall(ColNum, (
-		member(ColNum, All),
-		not(member(ColNum, Col))
-		), Column).
-
-getColList([], _, Tmp, Tmp). %Col = Tmp, !.
+	getColList(Start, Index, [], Col). 
+	
+getColList([], _, Tmp, Col):- Col = Tmp,!.
 getColList([H|T], Index, Tmp, Col):-
 	nth0(Index, H, Value),
 	append(Tmp, [Value], Tmp2),
