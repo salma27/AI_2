@@ -25,15 +25,22 @@ play():-
 	start(S),
 	sudoku(S).	
 
+isGoal(Start):-not(nth0(x, Start, Num)).
+
+sudoku(Start):- 
+	isGoal(Start),
+	write("Goal = "), 
+	write(Start), !.
+
 sudoku([Start|Rest]):- 
-	(getIndex(Start, RowNum, Index, 0),
+	getIndex(Start, RowNum, Index, 0),
 	getPossibleValues(Start, RowNum, Index, Possible),
 	Child = [],
 	createChidren(Possible, Start, Child, Children, RowNum),
 	append(Rest, Children, All),
-	sudoku(All));
-	write("Goal = "),
-	write(Start).
+	sudoku(All).
+
+
 	
 createChidren([], _, Child, Children, _):- Children = Child, !.
 createChidren([H|T], Start, Child, Children, RowNum):-
