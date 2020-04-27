@@ -63,15 +63,15 @@ getPossibleValues(Start, RowNum, Index, Possible):-
 	findall(Num, (member(Num, All),not(member(Num, Row))),Possible1),
 	findall(Num2, (member(Num2, All), not(member(Num2, Col))), Possible2),
 	findall(Num3, (member(Num3, All), not(member(Num3, Block))), Possible3),
-	findall(Num4, (member(Num4, Possible1), member(Num4, Possible2), member(Num4, Possible3)), Possible).
-	%write("Row: "),
-	%write(Row),
-	%write("Col: "),
-	%write(Col),
-	%write("Block: "),
-	%write(Block),
-	%write("Possible: "),
-	%write(Possible).
+	findall(Num4, (member(Num4, Possible1), member(Num4, Possible2), member(Num4, Possible3)), Possible),
+	write("Row: "),
+	write(Row),
+	write("Col: "),
+	write(Col),
+	write("Block: "),
+	write(Block),
+	write("Possible: "),
+	write(Possible).
 
 getSpecificBlock(Blocks, RowNum, Index, Block):-
 	N is ((Index // 3) + (3 * mod(RowNum, 3))),
