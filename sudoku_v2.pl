@@ -23,23 +23,23 @@ allNumbers([1, 2, 3, 4, 5, 6, 7, 8, 9]).
 
 play():-
 	start(S),
-	sudoku(S, Tmp).	
+	sudoku(S).	
 
 isGoal([Start|Rest]):-not(nth0(Num, Start, 0)), isGoal(Rest).
 isGoal([]).
 
-sudoku([], Start):- 
-	%isGoal(Start),
+sudoku(Start):- 
+	isGoal(Start),
 	write("Goal = "), 
 	write(Start), !.
 
-sudoku([Start|Rest], S):- 
+sudoku([Start|Rest]):- 
 	getIndex(Start, RowNum, Index, 0),
 	getPossibleValues(Start, RowNum, Index, Possible),
 	Child = [],
 	createChidren(Possible, Start, Child, Children, RowNum),
 	append(Rest, Children, All),
-	sudoku(All, Start).
+	sudoku(All).
 
 
 	
@@ -60,21 +60,10 @@ getPossibleValues(Start, RowNum, Index, Possible):-
 	blocks(OriginalB),
 	getBlocks(Start, Start, OriginalB, Blocks),
 	getSpecificBlock(Blocks, RowNum, Index, Block),
-	findall(Num, (member(Num, All),not(member(Num, Row))),Possible1),
-	findall(Num2, (member(Num2, All), not(member(Num2, Col))), Possible2),
-	findall(Num3, (member(Num3, All), not(member(Num3, Block))), Possible3),
-	findall(Num4, (member(Num4, Possible1), member(Num4, Possible2), member(Num4, Possible3)), Possible),
-	write("Row: "),
-	write(Row),
-	write("Col: "),
-	write(Col),
-	write("Block: "),
-	write(Block),
-	write("Possible: "),
-	write(Possible).
+	findall(Num, (member(Num, All),not(member(Num, Row)), not(member(Num, Col)),not(member(Num, Block))), Possible).
 
 getSpecificBlock(Blocks, RowNum, Index, Block):-
-	N is ((Index // 3) + (3 * mod(RowNum, 3))),
+	N is (mod(Index, 3) + (3 * mod(RowNum, 3))),
 	nth0(N, Blocks, Tmp),
 	Block = Tmp.
 
