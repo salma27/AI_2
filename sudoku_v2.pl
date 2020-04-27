@@ -1,4 +1,3 @@
-%momkn n4el X w n7ot 0
 start([
 	[
 		[0, 2, 6, 0, 0, 0, 8, 1, 0],
@@ -19,31 +18,22 @@ blocks([
 		[], [], []
 	]).
 
-numbers(1).
-numbers(2).
-numbers(3).
-numbers(4).
-numbers(5).
-numbers(6).
-numbers(7).
-numbers(8).
-numbers(9).
 allNumbers([1, 2, 3, 4, 5, 6, 7, 8, 9]). 
 
 
 play():-
 	start(S),
-	nth0(0, S, Start),
-	sudoku(S, Start, AllChildren, 0).
-	 
-sudoku(S, Start, AllChildren, Counter):- 
-	getIndex(Start, RowNum, Index, 0),
+	sudoku(S).	
+
+sudoku([Start|Rest]):- 
+	(getIndex(Start, RowNum, Index, 0),
 	getPossibleValues(Start, RowNum, Index, Possible),
 	Child = [],
 	createChidren(Possible, Start, Child, Children, RowNum),
-	%append(AllChildren, Children, AllChildren),
-	write(Children).
-	
+	append(Rest, Children, All),
+	sudoku(All));
+	write("Goal = "),
+	write(Start).
 	
 createChidren([], _, Child, Children, _):- Children = Child, !.
 createChidren([H|T], Start, Child, Children, RowNum):-
