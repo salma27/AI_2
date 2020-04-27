@@ -63,7 +63,7 @@ getPossibleValues(Start, RowNum, Index, Possible):-
 	findall(Num, (member(Num, All),not(member(Num, Row)), not(member(Num, Col)),not(member(Num, Block))), Possible).
 
 getSpecificBlock(Blocks, RowNum, Index, Block):-
-	N is (mod(Index, 3) + (3 * mod(RowNum, 3))),
+	N is ((Index//3) + (3 * mod(RowNum, 3))),
 	nth0(N, Blocks, Tmp),
 	Block = Tmp.
 
