@@ -10,7 +10,7 @@ start([
 		[5, 0, 0, 2, 0, 4, 0, 0, 9],
 		[0, 3, 8, 0, 0, 0, 4, 6, 0]
 	]
-	  ]).
+		]).
 
 blocks([
 		[], [], [],
@@ -25,10 +25,10 @@ play():-
 	start(S),
 	sudoku(S).	
 
-isGoal([Start|Rest]):-not(nth0(Num, Start, 0)), isGoal(Rest).
+isGoal([Start|Rest]):-not(nth0(_, Start, 0)),  isGoal(Rest).
 isGoal([]).
 
-sudoku(Start):- 
+sudoku([Start|_]):- 
 	isGoal(Start),
 	write("Goal = "), 
 	write(Start), !.
