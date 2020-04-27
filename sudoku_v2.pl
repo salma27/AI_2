@@ -60,8 +60,14 @@ getPossibleValues(Start, RowNum, Index, Possible):-
 	getColList(Start, Index, [], Col),
 	blocks(OriginalB),
 	getBlocks(Start, Start, OriginalB, Blocks),
-	findall(Num, (member(Num, All),not(member(Num, Row)), not(member(Num, Col)),not(member(Num, Blocks))), Possible).
-	
+	getSpecificBlock(Blocks, RowNum, Index, Block),
+	findall(Num, (member(Num, All),not(member(Num, Row)), not(member(Num, Col)),not(member(Num, Block))), Possible).
+
+getSpecificBlock(Blocks, RowNum, Index, Block):-
+	N is (mod(Index, 3) + (3 * mod(RowNum, 3))),
+	nth0(N, Blocks, Tmp),
+	Block = Tmp.
+
 getBlocks(_, [], Tmp, Blocks):- Blocks = Tmp, !.
 getBlocks(Start, [Row|Rest], OriginalB, Blocks):-
 	nth0(RowNum, Start, Row),
