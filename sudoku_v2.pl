@@ -36,7 +36,7 @@ play():-
 	nth0(0, S, Start),
 	sudoku(S, Start, AllChildren, 0).
 	 
-sudoku(S, Start, AllChildren):- 
+sudoku(S, Start, AllChildren, Counter):- 
 	getIndex(Start, RowNum, Index, 0),
 	getPossibleValues(Start, RowNum, Index, Possible),
 	Child = [],
