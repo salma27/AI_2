@@ -31,20 +31,21 @@ numbers(9).
 allNumbers([1, 2, 3, 4, 5, 6, 7, 8, 9]). 
 
 
-play(Col):-
+play(X):-
 	start(S),
 	nth0(0, S, Start),
-	sudoku(S, Start, AllChildren, 0, Col).
+	sudoku(S, Start, AllChildren, X).
 	 
-sudoku(S, Start, AllChildren, Counter, Col):- 
+sudoku(S, Start, AllChildren, Possible):- 
 	getIndex(Start, RowNum, Index, 0),
-	getPossibleValues(Start, RowNum, Index, Possible, Col).
+	getPossibleValues(Start, RowNum, Index, Possible).
 	
-getPossibleValues(Start, RowNum, Index, Possible, Col):-
+getPossibleValues(Start, RowNum, Index, Possible):-
 	nth0(RowNum, Start, Row),
 	allNumbers(All),
-	findall(Num, (member(Num, All),not(member(Num, Row))), Possible),
-	getColList(Start, Index, [], Col). 
+	getColList(Start, Index, [], Col),
+	findall(Num, (member(Num, All),not(member(Num, Row)), not(member(Num, Col))), Possible).
+	
 	
 getColList([], _, Tmp, Col):- Col = Tmp,!.
 getColList([H|T], Index, Tmp, Col):-
