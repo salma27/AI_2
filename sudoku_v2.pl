@@ -44,7 +44,73 @@ getPossibleValues(Start, RowNum, Index, Possible):-
 	nth0(RowNum, Start, Row),
 	allNumbers(All),
 	getColList(Start, Index, [], Col),
-	findall(Num, (member(Num, All),not(member(Num, Row)), not(member(Num, Col))), Possible).
+	findall(Num, (member(Num, All),not(member(Num, Row)), not(member(Num, Col))), Possible),
+	blocks(OriginalB),
+	getBlocks(Start, Start, OriginalB, Blocks),
+	write(Blocks).
+	
+getBlocks(_, [], Tmp, Blocks):- Blocks = Tmp, !.
+getBlocks(Start, [Row|Rest], OriginalB, Blocks):-
+	nth0(RowNum, Start, Row),
+	addInBlock(RowNum, Row, OriginalB, Block),
+	getBlocks(Start, Rest, Block, Blocks).
+	
+addInBlock(RowNum, [A, B, C, D, E, F, G, H, I], OriginalB, Block):-
+	(RowNum = 0; RowNum = 1; RowNum = 2),
+	nth0(0, OriginalB, B1),
+	nth0(1, OriginalB, B2),
+	nth0(2, OriginalB, B3),
+	
+	append([A, B, C], B1, NewB1),
+	append([D, E, F], B2, NewB2),
+	append([G, H, I], B3, NewB3),
+	
+	select(B1, OriginalB, NewB1, OriginalB2), 
+	select(B2, OriginalB2, NewB2, OriginalB3),
+	select(B3, OriginalB3, NewB3, OriginalBNew),
+	
+	Block = OriginalBNew.
+	
+addInBlock(RowNum, [A, B, C, D, E, F, G, H, I], OriginalB, Block):-
+	(RowNum = 3; RowNum = 4; RowNum = 5),
+	nth0(3, OriginalB, B1),
+	nth0(4, OriginalB, B2),
+	nth0(5, OriginalB, B3),
+	
+	append([A, B, C], B1, NewB1),
+	append([D, E, F], B2, NewB2),
+	append([G, H, I], B3, NewB3),
+	
+	select(B1, OriginalB, NewB1, OriginalB2), 
+	select(B2, OriginalB2, NewB2, OriginalB3),
+	select(B3, OriginalB3, NewB3, OriginalBNew),
+	
+	Block = OriginalBNew.
+	
+addInBlock(RowNum, [A, B, C, D, E, F, G, H, I], OriginalB, Block):-
+	(RowNum = 6; RowNum = 7; RowNum = 8),
+	nth0(6, OriginalB, B1),
+	nth0(7, OriginalB, B2),
+	nth0(8, OriginalB, B3),
+	
+	append([A, B, C], B1, NewB1),
+	append([D, E, F], B2, NewB2),
+	append([G, H, I], B3, NewB3),
+	
+	select(B1, OriginalB, NewB1, OriginalB2), 
+	select(B2, OriginalB2, NewB2, OriginalB3),
+	select(B3, OriginalB3, NewB3, OriginalBNew),
+	
+	Block = OriginalBNew.
+
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 getColList([], _, Tmp, Col):- Col = Tmp,!.
