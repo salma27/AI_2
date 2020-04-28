@@ -23,23 +23,25 @@ allNumbers([1, 2, 3, 4, 5, 6, 7, 8, 9]).
 
 play():-
 	start(S),
-	sudoku(S).	
+	[Start| T] = S,
+	sudoku(S, Start, 1).	
 
 isGoal([Start|Rest]):-not(nth0(Num, Start, 0)), isGoal(Rest).
 isGoal([]).
 
-sudoku(Start):- 
-	isGoal(Start),
+sudoku([], Goal, 0):- 
+	%isGoal(Start),
 	write("Goal = "), 
-	write(Start), !.
+	write(Goal), !.
 
-sudoku([Start|Rest]):- 
+sudoku([Start|Rest], S, Length):- 
 	getIndex(Start, RowNum, Index, 0),
 	getPossibleValues(Start, RowNum, Index, Possible),
 	Child = [],
 	createChidren(Possible, Start, Child, Children, RowNum),
 	append(Rest, Children, All),
-	sudoku(All).
+	length(All, Len),
+	sudoku(All, Start, Len).
 
 
 	
@@ -61,6 +63,8 @@ getPossibleValues(Start, RowNum, Index, Possible):-
 	getBlocks(Start, Start, OriginalB, Blocks),
 	getSpecificBlock(Blocks, RowNum, Index, Block),
 	findall(Num, (member(Num, All),not(member(Num, Row)), not(member(Num, Col)),not(member(Num, Block))), Possible).
+	%write("Possible :"),
+	%write(Possible).
 
 getSpecificBlock(Blocks, RowNum, Index, Block):-
 	N is ((Index//3) + (3 * (RowNum//3))),
